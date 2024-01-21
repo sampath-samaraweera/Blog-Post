@@ -5,7 +5,7 @@ const reducer = (state, action) => {
     case 'add_Blogpost':
       return [...state, { id: Math.floor(Math.random() * 99999), title: `Blog Post #${state.length + 1}` }];
     case 'delete_Blogpost':
-      return 
+      return state.filter((blogPost) => blogPost.id !== action.payload);
     default:
       return state;
   }
@@ -18,9 +18,9 @@ const addBlogPost = (dispatch) => {
 };
 
 const deleteBlogPost = (dispatch) => {
-  return () => {
-    dispatch({ type: 'delete_Blogpost' });
+  return (id) => {
+    dispatch({ type: 'delete_Blogpost', payload: id });
   };
 };
 
-export const { Context, Provider } = createDataContext(reducer, {addBlogPost} , []);
+export const { Context, Provider } = createDataContext(reducer, {addBlogPost, deleteBlogPost} , []);
